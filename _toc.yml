@@ -1,10 +1,9 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
+
 format: jb-book
-root: welcome
-options:
-  numbered: True
-parts:
-  - caption: Basics
-    chapters:
-    - file: content/digit_recognizer_with_keras
+root: about
+chapters:
+- file: content/computer_vision
+- file: content/digit_recognizer_with_keras
+- file: content/data_and_training

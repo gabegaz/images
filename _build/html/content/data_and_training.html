@@ -1,0 +1,931 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Understanding the data &#8212; Introduction to Deep Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/data_and_training';</script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Digit Recognition with Keras" href="digit_recognizer_with_keras.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../about.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../about.html">
+                    About the Project
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="computer_vision.html">Computer Vission</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digit_recognizer_with_keras.html">Digit Recognition with Keras</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Understanding the data</a></li>
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/gabegaz/images" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/gabegaz/images/issues/new?title=Issue%20on%20page%20%2Fcontent/data_and_training.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/data_and_training.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Understanding the data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Understanding the data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-model">Building the model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model-compilation">Model compilation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-model">Fitting model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model-validation">Model validation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation">Model evaluation</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="understanding-the-data">
+<h1>Understanding the data<a class="headerlink" href="#understanding-the-data" title="Permalink to this heading">#</a></h1>
+<p>The <em>MNIST</em> database (short for <strong>M</strong>odified <strong>N</strong>ational <strong>I</strong>nstitute of <strong>S</strong>tandards and <strong>T</strong>echnology database) is a large
+database of handwritten digits that is commonly used for training various image processing systems.The database is also widely used for training and testing in the field of machine learning.</p>
+<p>The <em>MNIST</em> database is already included in tensorflow installation, along with keras. We need a package called <code class="docutils literal notranslate"><span class="pre">mnist</span></code> to load the <em>MNIST</em> data to our local machine. <code class="docutils literal notranslate"><span class="pre">mnist</span></code> package is imported as follows. If you have GPU in your machine and not using it, you might need to run the first two lines.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This avoids any warning for not using GPU</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_CPP_MIN_LOG_LEVEL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;3&#39;</span> 
+
+<span class="c1"># import tensorflow and mnist package</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.datasets</span> <span class="kn">import</span> <span class="n">mnist</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can then load mnist dataset using the package’s function <code class="docutils literal notranslate"><span class="pre">load_data()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have four datasets:</p>
+<ol class="arabic simple">
+<li><p>Training images and their corresponding labels, and</p></li>
+<li><p>Test images with their corresponding labels.</p></li>
+</ol>
+<p>Both train and test images are stored in a <em>numpy</em> format. If you want to have an idea of of what the training images look like, use <code class="docutils literal notranslate"><span class="pre">shape</span></code> attribute of numpy. The output comes with <code class="docutils literal notranslate"><span class="pre">(60000,</span> <span class="pre">28,</span> <span class="pre">28)</span></code> as shown below. This means the data has sixty thausand samples (or data points/examples) of different digit categories (or classes) with a shape (28, 28).</p>
+<p>These images are black and white square images with 28 pixels height and 28 pixels width.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_images</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(60000, 28, 28)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The number of examples can also be known with the standard Python <code class="docutils literal notranslate"><span class="pre">len</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">train_images</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60000
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each of the example images, there is a corresponding label. The <em>MNIST</em> training labels are a list of 60,000 numbers (corresponding to the number of images) ranging from 0-9. You can see this list like so.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_labels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([5, 0, 4, ..., 5, 6, 8], dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The length of the this list is computed similarly by using the <code class="docutils literal notranslate"><span class="pre">len</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we have the nature and the structure of the data, we can build our model. Building the model without looking at your data might give you a headache later when you try to fit your model. So, it is advisable to work on your data first. In real world projects, you might spend quite little bit of time cleaning and restructuring your data.</p>
+<p>In our case, the <em>MNIST</em> data is already clean and is ready for training. Only three items remain to be solved.</p>
+<ol class="arabic simple">
+<li><p>Reshaping our data so that it will fit to the model we will be building in the next section.</p></li>
+<li><p>Change integer values into floating points</p></li>
+</ol>
+<p><strong>1. Change integer values into floating points</strong></p>
+<p>First is reshaping data from a two dimentional to a one-dimentional datasets. The following code snippet converts the two dimensional image <code class="docutils literal notranslate"><span class="pre">(28,</span> <span class="pre">28)</span></code> to a one-dimensional image of length <code class="docutils literal notranslate"><span class="pre">(28*28)</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_images</span> <span class="o">=</span> <span class="n">train_images</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">60000</span><span class="p">,</span> <span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now you can see that each of the training images is a one-dimentional image with 784 features, rather than a two-dimensional image with 28 features each, as can be seen from the below code block.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_images</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(60000, 784)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>2. Reshaping our data so that it will fit to the model we will be building in the next section</strong></p>
+<p>The second item is changing integers to floating points.This is because, as they are, we have integer values ranging from 0-255 for each pixel in these images. We need to change this format into floating numbers through a division by 255.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_images</span> <span class="o">=</span> <span class="n">train_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60000
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are done with working with the training data. The test data has a similar structure and you can use the same thing as above. The only difference is in the number of examples. While we have 60,000 training images, we have only 10,000 images. We will come back to this later while we test our trained mode.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="building-the-model">
+<h1>Building the model<a class="headerlink" href="#building-the-model" title="Permalink to this heading">#</a></h1>
+<p>To build the model, we first import <code class="docutils literal notranslate"><span class="pre">keras</span></code> and <code class="docutils literal notranslate"><span class="pre">layers</span></code> from <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first step in buidling our network is to determine number of parameters (that which change during training) and type/number of hyperparameters (that which we do not change during training; but change in between training). In our case, we are going to build a small model with two layers (including the output layer, but excluding the input layer).</p>
+<p>The first input will have 510 cells while the output layer has 10 cells (as it should be because we have only ten classes of digits: 0-9). The input layer is not counted as layer because it is the example itself. In our case, we have 784 cells (i.e. 28*28).</p>
+<p>We set two hyperparameters. In the first layer, the activation layer is <code class="docutils literal notranslate"><span class="pre">relu</span></code> (i.e. rectified linear unit) while the activation layer for the output layer is a <code class="docutils literal notranslate"><span class="pre">softmax</span></code>.</p>
+<p>Our model is named as digit_recognizer and is built as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">digit_recognizer</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">510</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>From now on, we will be working with <code class="docutils literal notranslate"><span class="pre">digit_recognizer</span></code> which holds all the parameters and hyperparameters of the model; will supply us important functions which we will be using in the next sections.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="model-compilation">
+<h1>Model compilation<a class="headerlink" href="#model-compilation" title="Permalink to this heading">#</a></h1>
+<p>In order to make the above model ready for training, we need to make some configurations on the model. At this stage, there are three important hyperparameters to consider for the configuration.</p>
+<p>The model should have a mechanism to learn (i.e. through which the model will update itself) based on the training data it sees, so as to improve its performance. This is handled by the <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> hyperparameter. There are several optimzers out there with different ways of handling this updating (learning) process based on the specific problem at hand. We use <code class="docutils literal notranslate"><span class="pre">rmsprop</span></code> in this project.</p>
+<p>The output (probabilities from the final layer) of the model should be compared with the ground truth. This comparizon is made based on a standard <code class="docutils literal notranslate"><span class="pre">loss</span></code> function. While you will have several of these loss functions available depending on the problem at hand, we will use <code class="docutils literal notranslate"><span class="pre">sparse_categorical_crossentropy</span></code> for this project.</p>
+<p>Finally, progress in the learning process should be recorded so that the necessary intervention is made by the data scientist by changing hyperparameters.The <code class="docutils literal notranslate"><span class="pre">metric</span></code> argument serves this purpose.  Computing accuracy can be enough for this exampple. So, we use <code class="docutils literal notranslate"><span class="pre">accuracy</span></code>.</p>
+<p>To make these comfigurations (or compile our model), we use the <code class="docutils literal notranslate"><span class="pre">compile()</span></code> function of the our model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">digit_recognizer</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">legacy</span><span class="o">.</span><span class="n">Adam</span><span class="p">(),</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="s1">&#39;sparse_categorical_crossentropy&#39;</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fitting-model">
+<h1>Fitting model<a class="headerlink" href="#fitting-model" title="Permalink to this heading">#</a></h1>
+<p>Fitting a model is a fancy word for <code class="docutils literal notranslate"><span class="pre">training</span></code> the model. We use the <code class="docutils literal notranslate"><span class="pre">fit()</span></code> function of the model that was already compiled in the above section. We will give the training images and training labels to this function. Furthermore, we still need to set some additional hyperparameters for this function. The first is the number of <code class="docutils literal notranslate"><span class="pre">epochs</span></code>. An epoch is when all the training data is used at once and is defined as the total number of iterations of all the training data in one cycle for training the model. We set 50 in our example. That is, we need the training to go five times (all the data should pass throught the model 5 times).</p>
+<p>The second hyperparameter is the <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> which is number of samples processed before the model is updated. We set 128 in this example. This means that once the first 128 example training images are processed, the model is updated. The second update is made only after the next 128 examples (i.e. at the 256th etc.)</p>
+<p>The third hyperparameter is <code class="docutils literal notranslate"><span class="pre">validation_data</span></code> which is the proporation of the validation data set.A validation data set is used in deep learning (and in supervised machine learning in general) to compare the performance of different trained models. This enables us to choose the correct model or hyper-parameters within the model.</p>
+<p>Finally, because this is the training stage, there are some temporary variables/values generated such as losses and metrics that we defined above in the model compilation stage. We need to capture them to monitor the training processes. We will capture them in the <code class="docutils literal notranslate"><span class="pre">hist</span></code> object that preceeds the model.</p>
+<p>To save space here, outputs are omitted; if you run this on your local machine, you will see some lengthy output. The training might take a couple of minutes under normal circumstances. Depending on your computing power of your local machine, it might take longer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span> <span class="o">=</span> <span class="n">digit_recognizer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_images</span><span class="p">,</span>
+                      <span class="n">train_labels</span><span class="p">,</span>
+                      <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                      <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+                      <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> 
+                      <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="model-validation">
+<h1>Model validation<a class="headerlink" href="#model-validation" title="Permalink to this heading">#</a></h1>
+<p>Model validation is the task of evaluating whether a chosen model is appropriate or not. We have some variables, created during training, that would help us check this appropriateness of the model. Two of the most important ones are the loss and accuracy of the training and validation data generated during the training process.</p>
+<p>We can have access to these values from the hist object that we caputred when we run the <code class="docutils literal notranslate"><span class="pre">digit_recognizer.fit()</span></code> function in the above step.</p>
+<p>Now, let’s get a dictionary of these values and print the keys. You can also find the values using <code class="docutils literal notranslate"><span class="pre">history_dict.values()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">history_dict</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">history</span>
+<span class="n">history_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;loss&#39;, &#39;accuracy&#39;, &#39;val_loss&#39;, &#39;val_accuracy&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">loss</span></code> and <code class="docutils literal notranslate"><span class="pre">accuracy</span></code> are the loss and accuracy values respectively from the training data. Similarly, <code class="docutils literal notranslate"><span class="pre">val_loss</span></code> and <code class="docutils literal notranslate"><span class="pre">val_accuracy</span></code> are the loss and accuracy of the validation data set based on the trained model.</p>
+<p>Now, lets get the actual values from this dictionary object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">history_dict</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">]</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">history_dict</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span>
+
+<span class="n">valid_loss</span> <span class="o">=</span> <span class="n">history_dict</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">]</span>
+<span class="n">valid_acc</span> <span class="o">=</span> <span class="n">history_dict</span><span class="p">[</span><span class="s2">&quot;val_accuracy&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can then draw these values on a two dimentional plot so that we can see what the loss and accuracy of how the training and validation data sets predict the labels. On the y-axis are the loss and accuracy values while the x-axis is the number of epochs.</p>
+<p>The first graph below shows the level of training loss and validation loss (i.e. y-axis) over the epochs (i.e. x-axis).  We need to create an epoch variable for this, like so. The epochs variable has sequential numbers ranging from 1 to 51 (excluded).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">epochs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>range(1, 51)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we need to importy matplotlib graphing libarary, and use the <code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code> funciton to draw the graph. Following the import of <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, we determine the ideal size of the graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="s2">&quot;bo&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training loss&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">valid_loss</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Validation loss&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Training and validation loss&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epochs&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/42b8db3f0d47dd154c3d74ceaf178af8b085c5ce1ff730cfc8d80c734d2700d3.png" src="../_images/42b8db3f0d47dd154c3d74ceaf178af8b085c5ce1ff730cfc8d80c734d2700d3.png" />
+</div>
+</div>
+<p>In a similar fassion, we can draw the accuracy of the training and validation data sets in the y-axis and epochs in the x-asis as shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="s2">&quot;bo&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training accuracy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">valid_acc</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Validation accuracy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Training and validation accuracy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epochs&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1e193ac33119d43d2871134b62f3299e7df13ee506963d8110e7f7d057c9bc9a.png" src="../_images/1e193ac33119d43d2871134b62f3299e7df13ee506963d8110e7f7d057c9bc9a.png" />
+</div>
+</div>
+<p>Looking at these graphs, we can have some adjustments based on the shape of the graphs and gap between the two lines. There can be either model overfitting/underfitting. We can then make adjustments in either the parameters or hyperparameters of the model to solve these overfitting/underfitting. There are some known techniques for this: increase/decrease model size, modify input features based on insights from error analysis, reduce or eliminate regularization, modify model architecture or add more training data. I will come to these solutions in a latter project.</p>
+<p>Once we make these adjustments guided by the validation data set, we might arrive at the reasonably good performing model. So far, the validation model is used just to make adjustments on the model/data. The actual test of the model is to be seen when the model is embarked on to an unknown data set. We do this in the following section.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="model-evaluation">
+<h1>Model evaluation<a class="headerlink" href="#model-evaluation" title="Permalink to this heading">#</a></h1>
+<p>Before testing the model,let’s explore our test data. First, the size and shape of the test data. We use similar functions that we used in the second section. We can run the shape and length of the test images as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_images</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_images</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((10000, 28, 28), 10000)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have 10,000 test images with shape <code class="docutils literal notranslate"><span class="pre">(28*28)</span></code> pixels. Furthermore, we can also see their labels, which are similar to train_images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_labels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We need to do two things before feeding the test data into our trained model. First, because the model was trained based on the train_images whose shape is <code class="docutils literal notranslate"><span class="pre">60000,</span> <span class="pre">28*28)</span></code>, we need to transform the test data in a similar fashion:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_images</span> <span class="o">=</span> <span class="n">test_images</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, we also convert the integers 0-255 into a floating point <code class="docutils literal notranslate"><span class="pre">float32</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_images</span> <span class="o">=</span> <span class="n">test_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To predict images based on test images, we use <code class="docutils literal notranslate"><span class="pre">recognizer.predict()</span></code> function. We feed into the model the first 10 test images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">digit_recognizer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_images</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 76ms/step
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see the outputs of the <code class="docutils literal notranslate"><span class="pre">prediction</span></code> object with the first test in the list(remember a python arraw is zero indexed).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.3140974e-15, 1.4965891e-19, 1.4998084e-13, 7.4675146e-09,
+       3.6565441e-26, 7.0664235e-19, 5.7438111e-23, 1.0000000e+00,
+       2.6157322e-15, 8.7947410e-12], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each number in the array list above corresponds to the probability that digit image the digit belongs to class. The 8th element (i.e. number 7-remember that the array is a zero indexed list) for example is the heighest (9.9999982e-01=0.99999982) among the probabilities of the ten classes. This shows that the first element (i.e. <code class="docutils literal notranslate"><span class="pre">predictions[0]</span></code>) is probably 7. We can see this with the <code class="docutils literal notranslate"><span class="pre">predictions[0].argmax()</span></code> function like so.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check if this prediciton is correct and is right in predicting the ground truth.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7
+</pre></div>
+</div>
+</div>
+</div>
+<p>The model predicts it right! You can also test with other examples. For example, the following code shows (with a little bit of formatting) the prediction and actual values side by side for the sixth predicted element. The predicted digit is 4 and the actual is also four. You can do this for other examples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predicted digit: </span><span class="si">{</span><span class="n">predictions</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span><span class="si">}</span><span class="s1">, Actual digit: </span><span class="si">{</span><span class="n">test_labels</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted digit: 4, Actual digit: 4
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because the accuracy of this model is more than 98 percent. You might not get a wrong prediction. However, this is not always true and the model might not be able to predict every digit perfectly. There might be some digits that are not correctly predicted.
+Checking whether the model is correctly predicting or not based on a signle test image might not be an efficient way of checking the performance of the model. Therefore, we should have an aggregated measure for the performance of the model. For this, we use the evaluate function of the model: <code class="docutils literal notranslate"><span class="pre">recognizer.evaluate()</span></code>. It outputs the overall test using the loss and accuracy measures computed above.</p>
+<p>Run the following code to do this. Watch closely that all the test data was given to the <code class="docutils literal notranslate"><span class="pre">recognizer.evaluate()</span></code> function unlike the above tests with only part of the test data. This is because we want to see the overall performance of the model, rather than example by example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_loss</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">digit_recognizer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>313/313 [==============================] - 0s 1ms/step - loss: 0.0953 - accuracy: 0.9823
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, you can see the overall performance by printing the <code class="docutils literal notranslate"><span class="pre">test_acc</span></code> object. The output shows a little higher than 98 percent performance, which is good given our simple model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">test_acc</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 98.2%
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that the performance of the model is 98 percent. This means if the model is given, say, 100 unknown images (similar to the ones used for training the model), then it will probably be predicting right 98 of the time correctly.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="digit_recognizer_with_keras.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Digit Recognition with Keras</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Understanding the data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-model">Building the model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model-compilation">Model compilation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-model">Fitting model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model-validation">Model validation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation">Model evaluation</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Getachew Abegaz | <a href="https://www.gabegaz.com" target="__blank">www.gabegaz.com</a>
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
